@@ -1,61 +1,47 @@
-// script.js
+// Smooth scrolling function
+function smoothScroll(target) {
+    const element = document.querySelector(target);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+}
 
-// Interactive Navigation  
-const navLinks = document.querySelectorAll('nav a');
+// Form validation function
+function validateForm(form) {
+    let isValid = true;
+    const inputs = form.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        if (!input.value) {
+            isValid = false;
+            input.classList.add('error');
+        } else {
+            input.classList.remove('error');
+        }
+    });
+    return isValid;
+}
 
-navLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-        targetSection.scrollIntoView({
-            behavior: 'smooth'
+// Interactive feature example (toggle class)
+function toggleClass(element, className) {
+    const el = document.querySelector(element);
+    if (el) {
+        el.classList.toggle(className);
+    }
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    const scrollButton = document.getElementById('scrollToSection');
+    if (scrollButton) {
+        scrollButton.addEventListener('click', () => smoothScroll('#targetSection'));
+    }
+    const form = document.getElementById('myForm');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            if (!validateForm(form)) {
+                e.preventDefault();
+                alert('Please fill all fields.');
+            }
         });
-    });
-});
-
-// Smooth Scrolling  
-const smoothScroll = (target, duration) => {
-    const targetPosition = target.getBoundingClientRect().top;
-    const startPosition = window.scrollY;
-    const distance = targetPosition + startPosition;
-    let startTime = null;
-
-    const animation = currentTime => {
-        if (startTime === null) startTime = currentTime;
-        const timeElapsed = currentTime - startTime;
-        const run = ease(timeElapsed, startPosition, distance, duration);
-        window.scrollTo(0, run);
-        if (timeElapsed < duration) requestAnimationFrame(animation);
-    };
-
-    const ease = (t, b, c, d) => {
-        t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
-        t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
-    };
-
-    requestAnimationFrame(animation);
-};
-
-// Contact Form Functionality  
-const contactForm = document.getElementById('contact-form');
-
-contactForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const formData = new FormData(contactForm);
-    fetch('/submit-form', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        alert('Form submitted successfully!');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('There was an error submitting the form.');
-    });
+    }
 });
