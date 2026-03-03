@@ -1,0 +1,39 @@
+.header {
+    background-color: #003366; /* Dark Blue */
+    color: #ffffff; /* White */
+    padding: 20px;
+    text-align: center;
+}
+
+.navbar {
+    background-color: #006699; /* Blue */
+    overflow: hidden;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #005580; /* Lighter Blue */
+}
+
+.main-content {
+    background-color: #f0f0f0; /* Light Grey */
+    padding: 20px;
+}
+
+.footer {
+    background-color: #003366; /* Dark Blue */
+    color: #ffffff; /* White */
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
